@@ -8,22 +8,28 @@ on:
 
 jobs:
   build:
+    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Build APK
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
+        uses: addnab/docker-run-action@v3
         with:
-          workdir: .
-          buildozer_version: stable
+          image: kivy/buildozer:latest
+          options: -v ${{ github.workspace }}:/home/user/hostcwd
+          run: |
+            cd /home/user/hostcwd
+            buildozer android debug
+
+      - name: List APK
+        run: |
+          find . -type f -name "*.apk" -print
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: AlgoFin-APK
-          path: ${{ steps.buildozer.outputs.filename }}
+          path: bin/*.apk
