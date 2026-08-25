@@ -19,10 +19,9 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: kivy/buildozer:latest
-          # Corrigido para linha única para garantir que o Docker receba as duas flags
-          options: -e BUILDOZER_WARN_ON_ROOT=0 -v ${{ github.workspace }}:/home/user/hostcwd
+          # Defina BUILDOZER_ALLOW_ROOT=1 para evitar o prompt interativo de root
+          options: -e BUILDOZER_ALLOW_ROOT=1
           run: |
-            cd /home/user/hostcwd
             buildozer android debug
 
       - name: Verificar APK
