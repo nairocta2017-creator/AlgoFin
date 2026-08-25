@@ -19,13 +19,15 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: kivy/buildozer:latest
-          options: -v ${{ github.workspace }}:/home/user/hostcwd
+          options: >-
+            -v ${{ github.workspace }}:/home/user/hostcwd
           run: |
             cd /home/user/hostcwd
             buildozer android debug
 
-      - name: List APK
+      - name: Verificar APK
         run: |
+          echo "APKs encontrados:"
           find . -type f -name "*.apk" -print
 
       - name: Upload APK
