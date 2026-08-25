@@ -19,9 +19,8 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: kivy/buildozer:latest
-          # Defina BUILDOZER_ALLOW_ROOT=1 para evitar o prompt interativo de root
-          options: -e BUILDOZER_ALLOW_ROOT=1
           run: |
+            export BUILDOZER_ALLOW_ROOT=1
             buildozer android debug
 
       - name: Verificar APK
