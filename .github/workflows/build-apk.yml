@@ -19,7 +19,9 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: kivy/buildozer:latest
+          # Adicionada a variável para ignorar o aviso de root
           options: >-
+            -e BUILDOZER_WARN_ON_ROOT=0
             -v ${{ github.workspace }}:/home/user/hostcwd
           run: |
             cd /home/user/hostcwd
